@@ -1,0 +1,46 @@
+// salarios.cpp : Defines the entry point for the console application.
+//
+
+#include "stdafx.h"
+#include "conio.h"
+#include <iostream>
+
+using namespace std;
+
+float salario(float salariobruto,float iva,float afp);
+
+
+int main()
+{float iva,afp,neto,n,bruto,minimo=1400,i,s=0,p=0;
+ iva=0.13;
+ afp=0.121;
+ do{
+ cout<<"ingrese el numero de empleados"<<endl;
+ cin>>n;
+ }while(n<=0);
+ for(i=1;i<=n;i++)
+ {do{
+   cout<<"ingrese el salario bruto"<<endl;
+   cin>>bruto;
+ }while(bruto<=0);
+   if(bruto<2*minimo){
+   neto=bruto;
+   }
+   else{
+   neto=salario(bruto,iva,afp);
+   }
+   cout<<"el salario neto es:"<<neto<<endl;
+   s=s+neto;
+  }
+ p=s/n;
+ cout<<"el promedio de los salarios es:"<<p;
+ 
+ system("pause");
+ return 0;
+}
+
+float salario(float salariobruto,float iva,float afp)
+{float k;
+ k=salariobruto-(salariobruto*iva)-(salariobruto*afp);
+ return k;
+}
