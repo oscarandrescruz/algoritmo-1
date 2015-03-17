@@ -1,0 +1,43 @@
+// palindromos.cpp : Defines the entry point for the console application.
+//
+
+#include <stdafx.h>
+#include <conio.h>
+#include <math.h>
+#include <iostream>
+#include <string.h>
+#include <ctype.h>
+#include <stdio.h>
+
+using namespace std;
+
+
+
+int main() 
+{int c=0,i;
+ char cad[80],cad2[80];
+ cout<<"ingrese la cadena de caracteres"<<endl;
+ gets(cad);
+ cout<<cad<<endl;
+ while(cad[c]!='\0')
+ {c=c+1;
+ }
+ for(i=0;i<c;i++)
+ {cad2[i]=cad[c-1-i];
+ }
+ cad2[c]='\0';
+ cout<<cad2<<endl;
+ if(strcmp(cad,cad2)==0)
+ {cout<<"es palindromo"<<endl;
+ }
+ else
+ {cout<<"no es palindromo"<<endl;
+ }
+ 
+ system("pause");
+ return 0;
+}
+
+
+
+
