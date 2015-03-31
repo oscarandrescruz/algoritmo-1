@@ -1,0 +1,93 @@
+// menu matriz.cpp : Defines the entry point for the console application.
+//
+
+#include "stdafx.h"
+#include <conio.h>
+#include <iostream>
+#include "math.h"
+#define fil 100
+#define col 100
+
+using namespace std;
+void mostrar(int mat[fil][col],int n,int s);
+void cargar(int mat[fil][col],int n,int s);
+void sumar(int mat[fil][col],int n,int s);
+void promedio(int mat[fil][col],int n,int s);
+
+int main()
+{int opcion,mat[fil][col],a,b,i,j,prome=0,p=0,f=0,diag=0;
+do{
+	system("cls");
+	cout<<"MENU"<<endl;
+	cout<<"1.-cargar matriz"<<endl;
+	cout<<"2.-promedio de la matriz"<<endl;
+	cout<<"3.-sumar diagonal"<<endl;
+	cout<<"4.-mostrar la matriz"<<endl;
+	cout<<"0.-salir"<<endl;
+	cin>>opcion;
+	switch(opcion)
+	{case 1:
+	        cout<<"ingrese el tamaño de filas"<<endl;
+			cin>>a;
+			cout<<"ingrese el tamaño de columnas"<<endl;
+			cin>>b;
+			cargar(mat,a,b);
+			getch();
+			break;
+	 case 2:
+		    for(i=0;i<a;i++)
+			{for(j=0;j<b;j++)
+			 {p=p+mat[i][j];
+			  f=f+1;
+			 }
+			}
+			prome=p/f;
+			cout<<"el promedio de la matriz es"<<prome<<endl;
+			getch();
+			break;
+	 case 3:
+		    for(i=0;i<a;i++)
+			{diag=diag+mat[i][i];
+			}
+			cout<<"la suma de la diagonal de la matriz es:"<<diag<<endl;
+			getch();
+			break;
+	  case 4:
+		    mostrar(mat,a,b);
+			getch();
+			break;
+
+
+	}
+}while(opcion!=0);
+getch();
+return 1;
+
+}
+   
+void cargar(int mat[fil][col],int n,int s)
+{int i,j;
+ for(i=0;i<n;i++)
+			{for(j=0;j<s;j++)
+			 {
+				 cout<<"ingrese valor a la matriz"<<endl;
+				 cin>>mat[i][j];
+			 
+			 }
+			}
+
+ 
+}
+void mostrar(int mat[fil][col],int n,int s)
+{int i,j;
+ for(i=0;i<n;i++)
+			{for(j=0;j<s;j++)
+			 {
+				 cout<<mat[i][j]<<"  ";
+			 
+			 }
+			 cout<<endl;
+			}
+   
+ 
+}
