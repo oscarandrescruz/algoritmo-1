@@ -1,0 +1,68 @@
+// examenes.cpp : Defines the entry point for the console application.
+//
+
+#include "stdafx.h"
+#include "conio.h"
+#include "math.h"
+#include <iostream>
+#include "string.h"
+
+using namespace std;
+
+void contar(char cad[30]);
+void invertir(char cad[30]);
+
+int main()
+{char cad[30];
+ int opc;
+
+ cout<<"ingrese una palabra"<<endl;
+ cin>>cad;
+ do{
+	 system("cls");
+	 cout<<"menu"<<endl;
+	 cout<<"1.-contar numero de minusculas"<<endl;
+	 cout<<"2.-invertir palabra"<<endl;
+	 cout<<"0.-´salir del menu"<<endl;
+	 cin>>opc;
+	 if((opc<0)&&(opc>2))
+	 {cout<<"opcion invalida";
+	 }
+	 switch(opc)
+	 {
+	 case 1: contar(cad);
+		     getch();
+			 break;
+	 case 2: invertir(cad);
+		     getch();
+			 break;
+	 }
+ }while(opc!=0);
+}
+void contar(char cad[30])
+{int i=0,p=0;
+while(cad[i]!='\0')
+{if((cad[i]=='a')&&(cad[i]=='z'))
+{
+ p=p+1;
+}
+i=i+1;
+}
+cout<<"el numero de minusculas es "<<p;
+}
+
+void invertir(char cad[30])
+{char cad2[30];
+int i=0,j=0;
+while(cad[i]!='\0')
+{j=j+1;
+ i=i+1;
+}
+while(cad[i]!='\0')
+{cad2[j-1]=cad[i];
+ j=j-1;
+ i=i+1;
+}
+cout<<"la palabra invertida es"<<cad2;
+}
+
