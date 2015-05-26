@@ -1,0 +1,613 @@
+include "stdafx.h"
+#include "conio.h"
+#include <iostream>
+#include <string>
+#include <iomanip>
+#include <stdio.h>
+#include <stdlib.h>
+using namespace std;
+
+
+#define MAX 20 
+struct t_empleados 
+{
+int id;
+string nombre,fechanac;
+float sb,sn;
+};
+t_empleados empleados;
+
+//Prototipos
+void cargarvector(t_empleados v[], int n);
+void clasificarburbuja(t_empleados v[], int n);
+bool busquedacodigo(t_empleados v[], int n, int clave, int &z );
+void listarplanilla(t_empleados v[], int n);
+float salarioneto(float sb);
+float promedio(t_empleados v[], int n);
+int menu(void);
+float clasificarSUELDO(t_empleados v[], int n);
+float clasificarSUELDO_MENOR(t_empleados v[], int n);
+void obtenerMayorEdad(t_empleados v[],int n,int &pos,int &d,int &m,int &a);
+void obtencion_Edad(string fecha1,string fecha2,int &d,int &m,int &a);
+
+// El cuerpo principal
+void main()
+{
+t_empleados vec[MAX];
+int op,N;
+bool bandera;
+do {
+op = menu();
+switch (op)
+{
+case 1: 
+system("cls");
+cout<<"leer N: ";
+cin>>N;
+cargarvector(vec,N);
+break;
+case 2:
+system("cls")
+cout<<" menu burbuja\n\n\n\n";
+clasificarburbuja(vec, N);
+cout << "ordemacion perfecta";
+_getch();
+break;
+case 3:
+system("cls");
+cout<<"\n\n\n\nIngreso el codigo a buscar";
+int codigo, pos;
+cin>> codigo;
+bandera=busquedacodigo(vec,N,codigo,pos);
+if (bandera) {
+cout<<"Codigo: "<<vec[pos].id<<endl;
+cout<<"Nombre: "<<vec[pos].nombre<<endl;
+cout<<"Fecha Nacimiento: "<<vec[pos].fechanac<<endl;
+cout<<"SalarioBruto: "<<vec[pos].sb;
+}
+else
+cout<<" No existe el codigo del empleado"<<endl;
+
+
+_getch();
+
+
+break;
+
+
+case 4:
+
+
+system("cls");
+
+
+cout<<"\t Planilla de Sueldos\n";
+
+
+cout<<"=============================================================\n\n";
+
+
+cout<<" Cod Nombre fecha de nacimiento salario Bruto salario Neto\n";
+
+
+cout<<"=================================================================\n\n";
+
+
+listarplanilla(vec,N);
+
+
+_getch(); 
+
+
+break;
+
+
+}
+
+
+}while ((op!=5));
+
+
+}
+
+
+
+
+
+int menu(void)
+
+
+{
+
+
+int opcion;
+
+
+system("cls");
+
+
+
+
+
+cout<<" Menu\n\n";
+
+
+cout<<" 1.- Cargar Vector\n";
+
+
+cout<<" 2.- Burbuja \n";
+
+
+cout<<" 3.- Busqueda de un codigo\n";
+
+
+cout<<" 4.- Mostrar Planilla\n";
+
+
+cout<<" 5.- Salir\n";
+
+
+do{
+
+
+cout<<"ingrese opcion --> ";
+
+
+cin>>opcion;
+
+
+}while(!(opcion>=1)&&!(opcion<=5));
+
+
+return (opcion); 
+
+
+}
+
+
+
+
+
+void cargarvector(t_empleados v[], int n)
+
+
+{
+
+
+int i;
+
+
+for(i=0; i < n ;i++)
+
+
+{
+
+
+cout<<"\nleer codigo: ";
+
+
+cin>>v[i].id;
+
+
+cout<<"leer nombre: ";
+
+
+cin.ignore();
+
+
+getline (cin,v[i].nombre);
+
+
+cout<<"leer fecha de nacimiento: ";
+
+
+//cin.ignore();
+
+
+getline (cin, v[i].fechanac);
+
+
+cout<<"leer salrio bruto: ";
+
+
+cin>>v[i].sb;
+
+
+v[i].sn = salarioneto(v[i].sb);
+
+
+}
+
+
+}
+
+
+
+
+
+void listarplanilla(t_empleados v[], int n)
+
+
+{
+
+
+int pos,m,a,d;
+
+
+for (int i=0; i<n; i++) 
+
+
+cout<<setw(5)<<v[i].id<<setw(25)<<v[i].nombre<<setw(12)<<v[i].fechanac<<setw(10)<<v[i].sb<<setw(10)<<v[i].sn<<" \n";
+
+
+
+
+
+cout<<"\n\n Promedio: "<<setw(15)<<promedio(v,n);
+
+
+cout<<"\n\n el mayor salario neto es :"<<setw(15)<<clasificarSUELDO(v,n);
+
+
+cout<<"\n\n el menor salario neto es :"<<setw(15)<<clasificarSUELDO_MENOR(v,n);
+
+
+
+
+
+obtenerMayorEdad(v,n,pos,d,m,a);
+
+
+cout<<"\n\n la persona de mayor edad es :\n";
+
+
+
+
+
+cout<<"\n\tCodigo: "<<v[pos].id<<endl;
+
+
+cout<<"\n\tNombre: "<<v[pos].nombre<<endl;
+
+
+cout<<"\n\tFecha Nacimiento: "<<v[pos].fechanac<<endl;
+
+
+cout<<"\n\tSalarioBruto: "<<v[pos].sb;
+
+
+cout<<"\n\tSalarioNeto: "<<v[pos].sn;
+
+
+cout<<"\n\t su edad es: "<<a<<" anos, "<<m<<" meses y "<<d<<" dia(s)";
+
+
+
+
+
+}
+
+
+float promedio(t_empleados v[], int n)
+
+
+{
+
+
+float S;
+
+
+S =0 ;
+
+
+for (int i=0; i<n; i++)
+
+
+S = S + v[i].sn;
+
+
+return ( S / n );
+
+
+}
+
+
+
+
+
+void clasificarburbuja(t_empleados v[], int n)
+
+
+{
+
+
+int i,j;
+
+
+t_empleados Aux;
+
+
+for(i=0; i< n-1; i++)
+
+
+{
+
+
+for(j=0; j< n-i-1; j++)
+
+
+{
+
+
+if (v[j].id > v[j+1].id)
+
+
+{
+
+
+Aux = v[j];
+
+
+v[j] = v[j+1];
+
+
+v[j+1] = Aux;
+
+
+}
+
+
+
+
+
+} 
+
+
+} 
+
+
+
+
+
+}
+
+
+
+
+
+bool busquedacodigo(t_empleados v[], int n, int clave, int &z )
+
+
+{
+
+
+bool sw;
+
+
+int i;
+
+
+sw = false;
+
+
+for(i=0 ; i<n ; i++)
+
+
+{
+
+
+if(clave == v[i].id)
+
+
+{
+
+
+sw = true;
+
+
+z = i;
+
+
+}
+
+
+}
+
+
+return(sw);
+
+
+}
+
+
+
+
+
+float salarioneto(float sb)
+
+
+{
+
+
+return(float(sb * (1-0.13-0.02)));
+
+
+}
+
+
+
+
+
+//-----------------------------
+
+
+float clasificarSUELDO(t_empleados v[], int n)
+
+
+{
+
+
+int i,mayor;
+
+
+mayor = -100;
+
+
+for(i=0; i< n; i++)
+
+
+{
+
+
+if (v[i].sn > mayor)
+
+
+mayor = v[i].sn;
+
+
+
+
+
+} 
+
+
+return (mayor);
+
+
+
+
+
+}
+
+
+//-----------------------------------------
+
+
+float clasificarSUELDO_MENOR(t_empleados v[], int n)
+
+
+{
+
+
+int i,menor;
+
+
+menor = 1000000;
+
+
+for(i=0; i< n; i++)
+
+
+{
+
+
+if (v[i].sn < menor)
+
+
+menor = v[i].sn;
+
+
+
+
+
+}
+
+
+return (menor);
+
+
+
+
+
+}
+
+
+//------------------------------------------------------------------
+
+
+void obtenerMayorEdad(t_empleados v[],int n,int &pos,int &d,int &m,int &a)
+
+
+{
+
+
+int i,dMay,mMay,aMay;
+
+
+string fecha2;
+dMay= -1; mMay= -1; aMay=-1; pos = -1;
+cout<<"\n leer fecha actual: "; 
+cin.ignore();
+getline(cin, fecha2);
+for(i = 0; i< n ; i++)
+{
+obtencion_Edad(v[i].fechanac,fecha2,d,m,a);
+if(a > aMay)
+{
+pos = i; aMay=a; dMay = d; mMay = m;
+}
+else 
+{
+if(a == aMay)
+{
+if( m > mMay)
+{
+pos = i; aMay=a; dMay = d; mMay = m;
+}
+else 
+{
+if( m == mMay)
+{
+if(d > dMay)
+{
+pos = i; aMay=a; dMay = d; mMay = m;
+}
+}
+}
+}
+}
+}
+d = dMay; m = mMay; a = aMay;
+
+
+}
+
+
+//-----------------------------------------------------------------------
+
+
+void obtencion_Edad(string fecha1,string fecha2,int &d,int &m,int &a)
+
+
+{
+
+
+int d1,m1,a1,d2,m2,a2;
+string aux;
+aux = fecha1.substr(0,2);// dias
+d1 = atoi(aux.c_str());
+aux = fecha1.substr(3,2);//mes
+m1 = atoi(aux.c_str());
+aux = fecha1.substr(6,4); // anos
+a1 = atoi(aux.c_str());
+aux = fecha2.substr(0,2);// dias
+d2 = atoi(aux.c_str());
+aux = fecha2.substr(3,2);//mes
+m2 = atoi(aux.c_str());
+aux = fecha2.substr(6,4); // anos
+a2 = atoi(aux.c_str());
+if (d2 < d1)
+{
+d2 = d2 +30 ; m2 = m2 -1;
+}
+if (m2 < m1)
+{
+m2 = m2 +12;
+a2 = a2 -1;
+}
+d = d2 - d1;
+m = m2 - m1;
+a = a2 - a1;
+}
+
+
