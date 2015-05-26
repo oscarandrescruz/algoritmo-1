@@ -1,0 +1,192 @@
+#include "stdafx.h"
+#include "math.h"
+#include "conio.h"
+#include <iostream>
+#include <iomanip>
+#include <string>
+#define TAM 50
+
+using namespace std;
+
+
+void cargar(string A[],int B[],int n);
+void mostrar(string A[],int B[],int n);
+
+
+void ordenar(string A[],int B[],int n);
+
+
+
+
+
+void main (void)
+
+
+{
+
+
+int n,B[TAM];
+
+
+string A[TAM];
+
+
+
+
+
+cout<<"ingrese numero de clientes: ";
+
+
+cin>>n;
+
+
+cargar(A,B,n);
+
+
+ordenar(A,B,n);
+
+
+mostrar(A,B,n);
+
+
+_getch();
+
+
+
+
+
+}
+
+
+void cargar(string A[],int B[],int n)
+
+
+{
+
+
+int i;
+
+
+for(i= 0; i<n; i++)
+
+
+{
+
+
+cout<<"Ingrese el nombre del empleado "<<i+1<<" : ";
+
+
+cin.ignore();
+
+
+getline(cin,A[i]);
+
+
+cout<<"Ingrese el monto: ";
+
+
+cin>>B[i];
+
+
+cout<<endl;
+
+
+}
+
+
+}
+
+
+void mostrar(string A[],int B[],int n)
+
+
+{
+
+
+int i;
+
+
+cout<<setw(10)<<"PLANILLA DE CREDITOS DE LA EMPRESA "<<endl<<endl;
+
+
+cout<<" Nro Cliente credito"<<endl;
+
+
+for(i= 0; i<n; i++)
+
+
+{
+
+
+cout<<setw(3)<<i+1<<setw(15)<<A[i]<<setw(15)<<B[i]<<endl;
+
+
+}
+
+
+
+
+
+}
+
+
+void ordenar(string A[],int B[],int n)
+
+
+{ int i,j,Aux;
+
+
+for(i= 0; i < n-1; i++)
+
+
+{
+
+
+for(j= 0; j < n-i-1; j++)
+
+
+{
+
+
+if (B[j] > B[j+1])
+
+
+{
+
+
+
+
+
+Aux = B[j];
+
+
+B[j] = B[j+1];
+
+
+B[j+1] = Aux;
+
+
+
+
+
+A[j].swap(A[j+1]);
+
+
+}
+
+
+
+
+
+}
+
+
+
+
+
+}
+
+
+
+
+}
