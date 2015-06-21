@@ -1,0 +1,196 @@
+#include <iostream>
+#include <conio.h>
+#include <string.h>
+#include <ctype.h>
+using namespace std;
+
+
+int contarCadena(char cad1[]){
+	int c=0;
+	while(cad1[c]!='\0'){
+	c++;
+	}
+	return(c);
+}
+
+void invertirCadena1(char cad1[]){
+	int i=0, c,d;
+	char cad2[80];
+	cad2[0]='\0';
+	c=contarCadena(cad1);
+	d=c+1;
+	while(i<c){
+		cad2[d]=cad1[i];
+		i++;
+		d--;
+	}
+	cad2[c]='\0';
+	cout<<cad2;
+}
+
+void invertirCadena2(char cad1[], char cad2[]){
+	int i=0, c,d;
+	c=contarCadena(cad1);
+	d=c-1;
+	while(i<c){
+		cad2[d]=cad1[i];
+		i++;
+		d--;
+	}
+	cad2[c]='\0';
+}
+
+void palindromo(char cad1[]){
+	int i;
+	char cad2[80];
+	invertirCadena2(cad1,cad2);
+	if(strcmp(cad1,cad2)==0){
+		cout<<"SI es palindromo";
+	}
+	else{
+		cout<<"No es palindromo";
+	}
+}
+
+
+void cuantasMinusculas(char cad1[]){
+	int i=0, c=0;
+	while(cad1[i]!='\0'){
+		if(cad1[i]>='a' && cad1[i]<='z'){
+			c++;
+		}
+		i++;
+	}
+	cout<<c;
+}
+
+void cuantasMayusculas(char cad1[]){
+	int i=0, c=0;
+	while(cad1[i]!='\0'){
+		if(cad1[i]>='A' && cad1[i]<='Z'){
+			c++;
+		}
+		i++;
+	}
+	cout<<c;
+}
+
+void cuantosCaracterDado(char cad1[], char l){
+	int i=0, c=0;
+	while(cad1[i]!='\0'){
+		if(cad1[i]==l){
+			c++;
+		}
+		i++;
+	}
+	cout<<c;
+}
+
+void cambiarAMinuscula(char cad1[]){
+ int i=0;
+ while(cad1[i]!='\0'){
+	 if(cad1[i]>='A' && cad1[i]<='Z'){
+		cad1[i]=tolower(cad1[i]);
+	 }
+	 i++;
+ }
+ cout<<cad1;
+}
+
+void valorMensaje(char cad1[]){
+	int i=0,s=0;
+	while(cad1[i]!='\0'){
+		if(cad1[i]>='0' && cad1[i]<='9'){
+		s=s+20;
+		}
+		else if(cad1[i]>='A' && cad1[i]<='Z'){
+		s=s+10;
+		}
+		else if(cad1[i]>='a' && cad1[i]<='z'){
+		s=s+10;
+		}
+		else if(cad1[i]>='á' && cad1[i]<='ñ'){
+		s=s+30;
+		}
+		else if(cad1[i]>='é'){
+		s=s+30;
+		}
+		else if(cad1[i]>=' '){
+		}
+		else if(cad1[i]>='!' && cad1[i]<='ÿ'){
+		s=s+30;
+		}
+		i++;
+	}
+	cout<<"Valor del mensaje: Bs. "<<s;
+}
+
+void valorDeletras(){
+	int a='A', b='B', c='C', d='D';
+	cout<<endl<<a<<endl<<b<<endl<<c<<endl<<d;
+}
+
+int main(){
+	char cad1[80],cad2[80],l;
+	int opcion,c;
+		do{
+		system("cls");
+		cout<<"******* M E N U *********";
+		cout<<endl<<"1.- Invertir cadena";
+		cout<<endl<<"2.- Ver si es palindromo";
+		cout<<endl<<"3.- Cantidad de minusculas";
+		cout<<endl<<"4.- Cantidad de mayusculas";
+		cout<<endl<<"5.- Calcular caracter dado";
+		cout<<endl<<"6.- Devolver cadena en minusculas";
+		cout<<endl<<"7.- Literal de un numero";
+		cout<<endl<<"8.- Valor de mensaje";
+		cout<<endl<<"0.- Salir";
+		cout<<endl<<"Seleccionar opcion: ";
+		cin >> opcion;
+		getchar();
+		switch(opcion){
+			case 1: cout<<"Introducir una cadena de caracteres: ";
+					gets(cad1);
+					invertirCadena1(cad1);
+					getch();
+					break;
+			case 2: cout<<"Introducir una cadena de caracteres: ";
+					gets(cad1);
+					palindromo(cad1);
+					getch();
+					break;
+			case 3: cout<<"Introducir una cadena de caracteres: ";
+					gets(cad1);
+					cuantasMinusculas(cad1);
+					getch();
+					break;
+			case 4: cout<<"Introducir una cadena de caracteres: ";
+					gets(cad1);
+					cuantasMayusculas(cad1);
+					getch();
+					break;
+			case 5: cout<<"Introducir una cadena de caracteres: ";
+					gets(cad1);
+					cout<<"Intruducir caracter: ";
+					cin>>l;
+					cuantosCaracterDado(cad1,l);
+					getch();
+					break;
+			case 6: cout<<"Introducir una cadena de caracteres: ";
+					gets(cad1);
+					cambiarAMinuscula(cad1);
+					getch();
+					break;
+			case 7: 
+					getch();
+					break;
+			case 8: cout<<"Introducir una cadena de caracteres: ";
+					gets(cad1);
+					valorMensaje(cad1);
+					getch();
+					break;
+		}
+	}while(opcion !=0);
+	getch();
+	return(1);
+}
