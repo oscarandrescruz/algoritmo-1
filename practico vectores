@@ -1,0 +1,329 @@
+#include <iostream>
+#include <conio.h>
+#include <math.h>
+using namespace std;
+
+void cargarVec(int n, int vec1[]){
+	int i;
+	for(i=0; i<n; i++){
+		cout<<"Introduzca elemento "<<i+1<<": ";
+		cin>>vec1[i];
+	}
+}
+
+void mostrarVec(int n, int vec1[]){
+	int i;
+	for(i=0; i<n; i++){
+		cout<<vec1[i]<<" ";
+	}
+}
+
+void frecuenciaDeNumero(int n, int vec1[], int nro){
+	int i, c=0;
+	for(i=0; i<n; i++){
+		if(vec1[i]==nro){
+		c++;
+		}
+	}
+	cout<<c;
+}
+
+void eliminarElementos(int n, int vec1[], int nro){
+	int i, j=0;
+	for(i=0; i<n; i++){
+		if(vec1[i]!=nro){
+			vec1[j]=vec1[i];
+			j++;
+		}
+	}
+	n=j+1;
+}
+
+
+
+
+int menor(int n, int vec1[]){
+	int i, menor=vec1[0];
+		for(i=0; i<n; i++){
+			if(vec1[i]<menor){
+			menor=vec1[i];
+			}
+		}
+	return(menor);
+}
+
+
+void eliminarElem(int n, int vec1[], int nro){
+	int i, j=0, vec2[80]={0};
+	for(i=0; i<n; i++){
+		if(vec1[i]!=nro){
+			vec2[j]=vec1[i];
+			j++;
+		}
+	}
+	mostrarVec(j,vec2);
+}
+
+void posicionElem(int n, int vec1[], int nro){
+	int i;
+	for(i=0; i<n; i++){
+		if(vec1[i]==nro){
+		cout<<"El elemento se encuenta en la posicion "<<i+1<<endl;		
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+void sumarCruzado(int n, int vec1[], int nro, int vec2[]){
+	int i, vec3[80], j;
+	if(n>nro){
+		j=nro-1;
+		for(i=0; i<n; i++){
+			vec3[i]=vec1[i]+vec2[j];
+			j--;
+		}
+	mostrarVec(nro,vec3);
+	}
+	else {
+		j=nro-1;
+		for(i=0; i<nro; i++){
+			vec3[i]=vec1[i]+vec2[j];
+			j--;
+		}
+	mostrarVec(nro,vec3);
+	}
+}
+
+void recorrer1PosicionIzquierda(int n, int vec1[]){
+	int i;
+	vec1[n]=vec1[0];
+	for(i=0; i<=n; i++){
+		vec1[i]=vec1[i+1];
+	}
+	mostrarVec(n, vec1);
+}
+
+int invertirNum(int Num){
+	int inv=0;
+		while (Num != 0){
+			inv = inv * 10;
+			inv = inv + Num % 10;
+			Num = Num / 10;
+	}
+	return(inv);
+}
+
+void funcion2(int n, int vec1[]){
+	int i,Num,c=1;
+
+	for(i=0;i<n;i++){
+		Num=powf(c,2);
+		c++;
+		Num=invertirNum(Num);
+		vec1[i]=Num;
+	}
+}
+
+int sumaDig(int n){
+	int d,s=0;
+
+	while(n>0){
+		d=n%10;
+		n=n/10;
+		s=s+d;
+	}
+	return(s);
+}
+
+void funcion3(int n, int vec1[]){
+	int d=1, i,Num=0;
+
+	for(i=0;i<n;i++){
+		Num=Num+d;
+		d=sumaDig(Num);
+		vec1[i]=Num;
+	}
+}
+
+void funcion4(int n, int vec1[]){
+	int d=1, i,Num=0;
+
+	for(i=0;i<n;i++){
+		Num=Num+d;
+		d=sumaDig(Num);
+		vec1[i]=d;
+	}
+}
+
+int primos(int n){
+	int i=1, band=1,c=0;
+	while(i<=n){
+		if(n%i==0){
+			c++;
+		}
+		i++;
+	}
+	if(c<=2 && i>1){
+		band=0;
+	}
+	return(band);
+}
+
+int primosN(int n){
+	int c=0,band,p=1;
+	while(p<=n){
+		c++;
+		band=primos(c);
+		if(band==0){
+			p++;
+		}
+	}
+	return(c);
+}
+
+int fibonacciN(int n){
+	int a=1,b=0,fib,i;
+	for(i=0; i<n; i++){
+		fib=a+b;
+		b=a;
+		a=fib;
+	}
+	return(b);
+}
+
+void cargarFibYPrimos(int n, int vec1[]){
+	int i,p,f,div;
+	div=n/2;
+	p=div;
+	f=div;
+	for(i=0; i<n; i++){
+		if(i<div){
+			vec1[i]=primosN(p);
+			p--;
+		}
+		else{
+			vec1[i]=fibonacciN(f);
+			f--;
+		}
+	}
+}
+
+void ordenarVector(int n, int vec1[]){
+  int i,j,aux;
+  for(i=0;i<n;i++)
+  {
+    for(j=0;j<n;j++)
+    {
+        if(vec1[j]>vec1[j+1])
+        {
+          aux=vec1[j];
+          vec1[j]=vec1[j+1];
+          vec1[j+1]=aux;
+        }
+	}
+  }
+}
+
+int main(){
+	int opcion, vec1[80]={0}, vec2[80]={0}, n, nro,p,f;
+		do{
+		system("cls");
+		cout<<"******* M E N U *********";
+		cout<<endl<<"1.- Frecuencia de un numero";
+		cout<<endl<<"2.- Ordenar vector";
+		cout<<endl<<"3.- Eliminar elemento";
+		cout<<endl<<"4.- Mostrar posicion de elemento";
+		cout<<endl<<"5.- Sumar elemenos de 2 vectores de manera cruzada";
+		cout<<endl<<"6.- Recorrer una posicion a la izquierda";
+		cout<<endl<<"7.- Secuencia 1";
+		cout<<endl<<"8.- Secuencia 2";
+		cout<<endl<<"9.- Secuencia 3";
+		cout<<endl<<"11.- Mitad primos, mitad fibonacci";
+		cout<<endl<<"0.- Salir";
+		cout<<endl<<"Seleccionar opcion: ";
+		cin >> opcion;
+		switch(opcion){
+			case 1: cout<<"Introduzca numero de elementos del vector: ";
+					cin>>n;
+					cargarVec(n,vec1);
+					cout<<"Intruduzca un numero: ";
+					cin>>nro;
+					frecuenciaDeNumero(n,vec1,nro);
+					getch();
+					break;
+			case 2: cout<<"Introduzca numero de elementos del vector: ";
+					cin>>n;
+					cargarVec(n,vec1);
+					ordenarVector(n,vec1);
+					mostrarVec(n,vec1);
+					getch();
+					break;
+			case 3: cout<<"Introduzca numero de elementos del vector: ";
+					cin>>n;
+					cargarVec(n,vec1);
+					cout<<"Intruduzca un numero: ";
+					cin>>nro;
+					eliminarElem(n, vec1, nro);
+					getch();
+					break;
+			case 4: cout<<"Introduzca numero de elementos del vector: ";
+					cin>>n;
+					cargarVec(n,vec1);
+					cout<<"Intruduzca un numero: ";
+					cin>>nro;
+					posicionElem(n,vec1,nro);
+					getch();
+					break;
+			case 5: cout<<"Introduzca numero de elementos del vector 1: ";
+					cin>>n;
+					cargarVec(n,vec1);
+					cout<<"Introduzca numero de elementos del vector 2: ";
+					cin>>nro;
+					cargarVec(nro,vec2);
+					sumarCruzado(n,vec1,nro,vec2);
+					getch();
+					break;
+			case 6: cout<<"Introduzca numero de elementos del vector: ";
+					cin>>n;
+					cargarVec(n,vec1);
+					recorrer1PosicionIzquierda(n,vec1);
+					getch();
+					break;
+			case 7: cout<<"Introduzca numero de elementos del vector: ";
+					cin>>n;
+					funcion2(n,vec1);
+					mostrarVec(n,vec1);
+					getch();
+					break;
+			case 8: cout<<"Introduzca numero de elementos del vector: ";
+					cin>>n;
+					funcion3(n,vec1);
+					mostrarVec(n,vec1);
+					getch();
+					break;
+			case 9: cout<<"Introduzca numero de elementos del vector: ";
+					cin>>n;
+					funcion4(n,vec1);
+					mostrarVec(n,vec1);
+					getch();
+					break;
+			case 11:cout<<"Introduzca numero de elementos del vector: ";
+					cin>>n;
+					cargarFibYPrimos(n, vec1);
+					mostrarVec(n,vec1);
+					getch();
+					break;
+		}
+		}while(opcion !=0);
+	getch();
+	return(1);
+}
+
