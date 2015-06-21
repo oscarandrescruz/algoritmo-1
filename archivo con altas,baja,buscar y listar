@@ -1,0 +1,105 @@
+#include "stdafx.h"
+#include "conio.h"
+#include "string.h"
+#include <iostream>
+#include "stdio.h"
+
+using namespace std;
+
+struct regamigo{
+int edad;
+char nombre[30];
+char sexo;
+char estado;
+};
+
+void creararchivo(char nomarchivo[])
+{FILE *ptr;
+ ptr=fopen("nomarchivo", "wb");
+ fclose(ptr);
+}
+void cargarchivo()
+{FILE *ptr;
+ regamigo reg;
+ cout<<"nombre"<<endl;
+ cin>>reg.nombre;
+ cout<<"edad"<<endl;
+ cin>>reg.edad;
+ cout<<"sexo M o F"<<endl;
+ cin>>reg.sexo;
+ reg.estado='S';
+ ptr=fopen("amigos.dat","ab");
+ fwrite(&reg,sizeof(reg),1,ptr);
+ fclose(ptr);
+}
+void mostrar()
+{FILE *ptr;
+ regamigo reg;
+ ptr=fopen("amigos.dat","rb");
+ if(ptr!=NULL)
+ {fread(&reg,sizeof(reg),1,ptr);
+  while(feof(ptr)==false)
+  { if(reg.estado=='S')
+   {cout<<reg.nombre<<"  ";
+   cout<<reg.edad<<"  ";
+   cout<<reg.sexo<<endl;
+   }
+  fread(&reg,sizeof(reg),1,ptr);
+  }
+  fclose(ptr);
+ }
+ else{
+ cout<<"no existe el archivo";
+ }
+}
+
+void buscar(int num)
+{FILE *ptr;
+ regamigo reg;
+ ptr=fopen("amigos.dat","r+b");
+ if(ptr!=NULL)
+ {fseek(ptr,(num-1)*sizeof(reg),SEEK_SET);
+  fread(&reg,sizeof(reg),1,ptr);
+  if(feof(ptr)==false)
+  {cout<<reg.nombre<<""<<reg.edad<<""<<reg.sexo;
+  fread(&reg,sizeof(reg),1,ptr);
+  }
+  else{
+  cout<<"no existe el registro";}
+  fclose(ptr);
+ }
+ else{
+	 cout<<"no existe el archivo";}
+}
+
+void main()
+{int opc,num;
+system("cls");
+do{ 
+	
+cout<<"menu"<<endl;
+ cout<<"1.crear el archivo"<<endl;
+ cout<<"2.cargar el archivo"<<endl;
+ cout<<"3.mostrar el archivo"<<endl;
+ cout<<"4.buscar un registro"<<endl;
+ cout<<"0.salir"<<endl;
+ cin>>opc;
+ 
+ switch(opc){
+case 1: creararchivo("amigos.dat");
+	    cout<<"el archivo fue creado exitosamente";
+	    break;
+case 2: cargarchivo();
+	    break;
+case 3: mostrar();
+	   break;
+case 4:cout<<"ingrese un numero de registro"<<endl;
+	   cin>>num;
+	   buscar(num);
+	   break;
+ }
+}while(opc!=0);
+
+
+}
+
