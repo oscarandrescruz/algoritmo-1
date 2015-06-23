@@ -1,0 +1,97 @@
+
+#include "stdafx.h"
+#include "conio.h"
+#include "stdio.h"
+#include "math.h"
+#include <iostream>
+
+using namespace std;
+void volcar(int n);
+void unir(int s,int p);
+void eliminar(int m);
+void palindromo(int l);
+
+int main()
+{int n,s,p,m,l;
+ cout<<"ingrese un numero"<<endl;
+ cin>>n;
+ cout<<"ingrese un numero"<<endl;
+ cin>>s;
+ cout<<"ingrese un numero"<<endl;
+ cin>>p;
+ cout<<"ingrese un numero"<<endl;
+ cin>>m;
+ cout<<"ingrese un numero"<<endl;
+ cin>>l;
+ volcar(n);
+ unir(s,p);
+ eliminar(m);
+ palindromo(l);
+ system("pause");
+ return 0;
+}
+ 
+void volcar(int n)
+{int k,i,c=0;
+ k=n;
+ while(k!=0)
+  {i=k%10;
+   c=i+c*10;
+   k=k/10;
+  }
+ cout<<"el numero"<<n<<"volcado es"<<c<<endl;
+}
+void unir(int s,int p)
+{int j,h,a;
+ j=p;
+ while(j!=0)
+  {h=j%10;
+   s=s*10;
+   j=j/10;
+  }
+ a=s+p;
+ cout<<"la union de los numeros es"<<a<<endl;
+}
+void eliminar(int m)
+{int max,v,r,q,c=0,k,x,l=0;
+ max=m%10;
+ v=m;
+ q=m;
+ while(v!=0)
+  {r=v%10;
+   if(r>max)
+   {max=r;
+   }
+   v=v/10;
+  }
+ while(q!=0)
+ {k=q%10;
+  if(k!=max)
+  {
+  c=k+c*10;
+  }
+ q=q/10;
+ }
+ while(c!=0)
+ {x=c%10;
+  l=x+l*10;
+  c=c/10;
+ }
+ cout<<"el numero eliminando el mayor es"<<l<<endl;
+}
+
+void palindromo(int l)
+{int w,z,g=0;
+ w=l;
+ while(w!=0)
+ {z=w%10;
+  g=z+g*10;
+  w=w/10;
+ }
+ if(l==g)
+ {cout<<"es palindromo";
+ }
+ else
+ {cout<<"no es palindromo"<<endl;
+ }
+}
