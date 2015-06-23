@@ -1,0 +1,64 @@
+#include "stdafx.h"
+#include "conio.h"
+#include "math.h"
+#include <iostream>
+
+using namespace std;
+
+void cargar(int vec[],int n);
+void mostrar(int vec[],int n);
+void cruzado(int vec[],int n,int vec1[],int s);
+
+
+
+int main()
+{
+	int vec[80]={0},v,vec1[80]={0},c;
+	cout<<"ingrese el tamano del primer vector"<<endl;
+	cin>>v;
+    cargar(vec,v);
+	cout<<"ingrese el tamano del segundo vector"<<endl;
+	cin>>c;
+	cargar(vec1,c);
+	cruzado(vec,v,vec1,c);
+    system("pause");
+	return 0;
+}
+void cargar(int vec[],int n)
+{int i;
+ for(i=0;i<n;i++)
+ {cout<<"ingrese elemento numero:"<<i+1<<endl;
+  cin>>vec[i];
+ }
+}
+void mostrar(int vec[],int n)
+{int i;
+ for(i=0;i<n;i++)
+ {cout<<vec[i]<<"   ";
+ }
+}
+void cruzado(int vec[],int n,int vec1[],int s)
+{int i,vec2[80]={0},l;
+ if(n>s)
+ {for(i=0;i<n;i++)
+  {vec2[i]=vec[i]+vec1[s-1];
+  s=s-1;
+  if(s<0){
+  vec1[s-1]=0;
+  }
+  }
+  l=i;
+ }
+ else
+ {for(i=0;i<s;i++)
+  {
+   vec2[i]=vec1[i]+vec[n-1];
+   n=n-1;
+   if(n<0){
+   vec[n-1]=0;
+   }
+  }
+  l=i;
+ }
+ mostrar(vec2,l);
+}
