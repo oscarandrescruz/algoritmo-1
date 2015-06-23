@@ -1,0 +1,243 @@
+
+#include "stdafx.h" 
+2 #include "stdio.h" 
+3 #include "conio.h" 
+4 #include <string> 
+5 #include <iostream> 
+6 
+ 
+7 
+ 
+8 using namespace std; 
+9 
+ 
+10   
+11 struct tipo_registro 
+12 { 
+13 	int no_prod; 
+14 	string descrip; 
+15 	int cantidad; 
+16 	float precio; 
+17 	char garantia; 
+18 }; 
+19 
+ 
+20 tipo_registro Registro; 
+21 
+ 
+22 FILE*alias; 
+23 
+ 
+24   
+25 void menu(); 
+26 bool ALTA_SECUENCIAL(); 
+27 void BAJA_LOGICA_SECUENCIAL(void); 
+28 void LISTADO_SECUENCIAL(); 
+29 
+ 
+30 
+ 
+31 int main() 
+32 { 
+33 	system("cls"); 
+34 	int opcion = 9; 
+35 	while (opcion != 0){		 
+36 		menu(); 
+37 		cin >> opcion; 
+38 
+ 
+39 		switch (opcion){ 
+40 		case 1:			 
+41 			LISTADO_SECUENCIAL(); 
+42 			system("pause"); 
+43 			break; 
+44 		case 2:			 
+45 			if (ALTA_SECUENCIAL()) 
+46 			{ 
+47 				cout << "Inserto Corectamente \n"; 
+48 			} 
+49 			else{ 
+50 				cout << "No se Inserto \n"; 
+51 			} 
+52 			system("pause"); 
+53 			break; 
+54 		case 3:			 
+55 			BAJA_LOGICA_SECUENCIAL(); 
+56 			system("pause"); 
+57 			break; 
+58 
+ 
+59 		default: 
+60 			printf("\nOpcion Incorrecta!!\n"); 
+61 			system("pause"); 
+62 			break; 
+63 		} 
+64 
+ 
+65 	} 
+66 } 
+67 
+ 
+68 void menu(){ 
+69 	system("cls"); 
+70 	printf("Menu "); 
+71 	printf("\n 1.- Mostrar Productos"); 
+72 	printf("\n 2.- Insertar Producto"); 
+73 	printf("\n 3.- Eliminar Producto"); 
+74 	printf("\n\n   OPCION #: "); 
+75 } 
+76 
+ 
+77 bool ALTA_SECUENCIAL() 
+78 { 
+79 	int no_prod;   
+80 
+ 
+81 	cout << "\n\n\n\rALTAS DE REGISTROS DE PRODUCTOS"; 
+82 	cout << "\n\n\n\rNumero de producto: "; 
+83 	cin >> no_prod; 
+84 	cin.ignore(); 
+85 
+ 
+86 	alias = fopen("PRODUCTO.SEC", "rb+");   
+87 	if (alias == NULL) 
+88 	{ 
+89 		alias = fopen("PRODUCTO.SEC", "wb");   
+90 	} 
+91 	else 
+92 	{ 
+93 		fread(&Registro, sizeof(Registro), 1, alias); 
+94 		  
+95 		while (!feof(alias))   
+96 		{ 
+97 			if (Registro.no_prod == no_prod)  
+98 			{ 
+99 				cout << "\n\n\n\rRegistro ya existe!!! \n"; 
+100 				fclose(alias); 
+101 				return false; 
+102 			} 
+103 			fread(&Registro, sizeof(Registro), 1, alias); 
+104 		} 
+105 
+ 
+106 		fclose(alias); 
+107 		alias = fopen("PRODUCTO.SEC", "ab"); 
+108 	} 
+109 
+ 
+110 	  
+111 	cout << "\n\rDescripcion: "; 
+112 	getline(cin, Registro.descrip); 
+113 	cout << "\n\rCantidad : "; 
+114 	cin >> Registro.cantidad; 
+115 	cout << "\n\rPrecio : "; 
+116 	cin >> Registro.precio; 
+117 	do 
+118 	{		 
+119 		Registro.garantia = toupper(getchar()); 
+120 		if (Registro.garantia != 'S' && Registro.garantia != 'N')  
+121 			cout << "\n\rGarantia (S/N) : "; 
+122 	} while (Registro.garantia != 'S' && Registro.garantia != 'N'); 
+123 
+ 
+124 	Registro.no_prod = no_prod; 
+125 	fwrite(&Registro, sizeof(Registro), 1, alias);   
+126 	fclose(alias);   
+127 	cout << "\n\n\n\rProducto registrado !!!"; 
+128 
+ 
+129 	return true; 
+130 } 
+131 
+ 
+132 
+ 
+133 void BAJA_LOGICA_SECUENCIAL(void) 
+134 { 
+135 	int no_prod;   
+136 		char op;   
+137 	  
+138 	cout << "\n\rBAJAS LOGICAS DE REGISTROS DE PRODUCTOS"; 
+139 	alias = fopen("PRODUCTO.SEC", "rb+");   
+140 	  
+141 		if (alias == NULL)   
+142 		{ 
+143 		cout << "\n\n\n\rNo existe el archivo !!!"; 
+144 		cout << "\n\r<<< Oprima cualquier tecla para continuar >>>"; 
+145 		getchar(); 
+146 		return; 
+147 		} 
+148 	cout << "\n\n\n\rNumero de producto: "; cin >> no_prod; 
+149 	fread(&Registro, sizeof(Registro), 1, alias); 
+150 	 	while (!feof(alias))   
+151 	{ 
+152 		if (Registro.no_prod == no_prod) 
+153 		{ 
+154 			cout << "\n\rNo Prod Descripcion Cantidad Precio Garantia"; 
+155 				cout << "\n\r------------------------------------------------------------------------";				 
+156 			Registro.no_prod = 0; 
+157 			Registro.descrip= ""; 
+158 			Registro.cantidad = 0; 
+159 			Registro.precio = 0.0; 
+160 			Registro.garantia = ' '; 
+161 			do { 
+162 				op = toupper(getchar()); 
+163 				if (op != 'S' && op != 'N')  
+164 					cout << "\n\n\rEsta seguro que desea borrarlo? [S/N] ---> ";				 
+165 			} while (op != 'S' && op != 'N'); 
+166 			if (op == 'S') 
+167 			{ 
+168 				  
+169 				fseek(alias, ftell(alias) - sizeof(Registro), SEEK_SET); 
+170 				fwrite(&Registro, sizeof(Registro), 1, alias);   
+171 					cout << "\n\n\n\rRegistro eliminado !!!"; 
+172 			} 
+173 			fclose(alias);   
+174 			cout << "\n\r<<< Oprima cualquier tecla para continuar >>>"; 
+175 			getchar(); 
+176 			return; 
+177 		} 
+178 		fread(&Registro, sizeof(Registro), 1, alias); 
+179 	} 
+180 	cout << "\n\rNo se encuentra ese registro !!!"; 
+181 	fclose(alias);   
+182 	cout << "\n\r<<< Oprima cualquier tecla para continuar >>>"; 
+183 	getchar(); 
+184 	return; 
+185 } 
+186 
+ 
+187 void LISTADO_SECUENCIAL(void) 
+188 { 
+189 	cout << "\n\rLISTADO DE REGISTROS DE PRODUCTOS"; 
+190 	alias = fopen("PRODUCTO.SEC", "rb");   
+191 	if (alias == NULL) 
+192 	{ 
+193 		cout << "\n\n\n\rNo existe el archivo !!!"; 
+194 		cout << "\n\r<<< Oprima cualquier tecla para continuar >>>"; 
+195 		return; 
+196 	} 
+197 	cout << "\n\rNo Prod Descripcion Cantidad Precio Garantia"; 
+198 	cout << "\n\r------------------------------------------------------------------------ \n"; 
+199 	fread(&Registro, sizeof(Registro), 1, alias); 
+200 	  
+201 	while (!feof(alias))   
+202 	{ 
+203 
+ 
+204 		cout << Registro.no_prod << " " << Registro.descrip << " " << Registro.cantidad << " " << Registro.precio << " " << Registro.garantia << "\n"; 
+205 		fread(&Registro, sizeof(Registro), 1, alias); 
+206 	} 
+207 	fclose(alias);   
+208 	cout << "\n\r------------------------------------------------------------------------"; 
+209 	cout << "\n\rFin del listado !!!"; 
+210 	cout << "\n\r<<< Oprima cualquier tecla para continuar >>>"; 
+211 	return; 
+212 } 
+ 
+
+
+
+ 
+  
+ 
